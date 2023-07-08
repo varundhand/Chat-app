@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { COLLECTION_ID_MESSAGES, DATABASE_ID, databases } from '../appwriteConfig'
-import { ID } from 'appwrite' // cusgtome appwrite function which generates a unique id for us 
+import { ID,Query } from 'appwrite' // custom appwrite function which generates a unique id for us 
 
 const Room = () => {
 
@@ -12,7 +12,14 @@ const Room = () => {
   }, [])
 
   const getMessages = async () => {
-    const response = await databases.listDocuments(DATABASE_ID,COLLECTION_ID_MESSAGES)
+    const response = await databases.listDocuments(
+      DATABASE_ID,
+      COLLECTION_ID_MESSAGES,
+      [
+        Query.orderDesc("$createdAt"),
+        Query.limit(5)
+      ]
+    )
     console.log('REPSONSE:', response.documents)
     setMessages(response?.documents)
   }
@@ -28,11 +35,12 @@ const Room = () => {
       DATABASE_ID,
       COLLECTION_ID_MESSAGES,
       ID.unique(),
-      payload
+      payload,
     )
 
     console.log(response)
 
+    setMessages(prevState => [response,...messages])
 
     setMessageBody('')
   }
@@ -72,6 +80,7 @@ const Room = () => {
             </div>
           ))}
         </div>
+
       </div>
       
     </main>
