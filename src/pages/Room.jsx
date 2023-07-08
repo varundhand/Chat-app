@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { COLLECTION_ID_MESSAGES, DATABASE_ID, databases } from '../appwriteConfig'
+import { ID } from 'appwrite' // cusgtome appwrite function which generates a unique id for us 
 
 const Room = () => {
 
   const [messages, setMessages] = useState([])
+  const [messageBody, setMessageBody] = useState('')
 
   useEffect(() => {
     getMessages();
@@ -15,9 +17,48 @@ const Room = () => {
     setMessages(response?.documents)
   }
 
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    let payload ={
+      body: messageBody
+    }
+
+    let response = await databases.createDocument(
+      DATABASE_ID,
+      COLLECTION_ID_MESSAGES,
+      ID.unique(),
+      payload
+    )
+
+    console.log(response)
+
+
+    setMessageBody('')
+  }
+
   return (
     <main className='container'>
-      <div className="room--container">
+       <div className="room--container">
+
+      <form action="" id='message--form' onSubmit={handleSubmit}>
+        <div>
+            <textarea 
+              required
+              placeholder='Type your message...'
+              maxLength='1000'
+              onChange={(e) => {setMessageBody(e.target.value)}}
+              value={messageBody}
+            >
+            </textarea>
+
+            <div className='send-btn--wrapper'>
+              <input className='btn btn--secondary' type="submit" value='Send'/>
+            </div>
+        </div>
+      </form>
+
+     
         <div className="">
           {messages.map(message => (
             <div key={message.$id} className='message--wrapper' >
