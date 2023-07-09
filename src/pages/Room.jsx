@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { COLLECTION_ID_MESSAGES, DATABASE_ID, databases } from '../appwriteConfig'
 import { ID,Query } from 'appwrite' // custom appwrite function which generates a unique id for us 
+import { Trash2 } from 'react-feather'
 
 const Room = () => {
 
@@ -24,6 +25,12 @@ const Room = () => {
     setMessages(response?.documents)
   }
 
+  const deleteMessage = async (message_id) => { // we will pass in the message id for the message we wanna delete
+    databases.deleteDocument(DATABASE_ID,COLLECTION_ID_MESSAGES,message_id)
+    // setMessages([...messages].filter(message => message.$id !== message_id)) // Alter
+    setMessages(prevState => messages.filter(message => message.$id !== message_id))
+  }
+  console.log(messages)
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -70,8 +77,14 @@ const Room = () => {
         <div className="">
           {messages.map(message => (
             <div key={message.$id} className='message--wrapper' >
-              <div className="message-header">
-                <small className='message-timestamp'>{message.$createdAt}</small>
+              <div className="message--header">
+                <small className='message-timestamp'>{new Date(message.$createdAt).toLocaleString()}</small>
+                <div>
+                  <Trash2 
+                    className='delete--btn'
+                    onClick={() => deleteMessage(message.$id)}
+                  />
+                </div>
               </div>
 
               <div className='message--body'>

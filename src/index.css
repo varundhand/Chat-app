@@ -182,6 +182,7 @@ color:#8db3dd;
 cursor: pointer;
 transition: 0.3s;
 width: 16px;
+margin-left: auto;
 }
 
 .delete--btn:hover{
