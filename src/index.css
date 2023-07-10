@@ -1,8 +1,8 @@
 /* Global settings */
 
 :root{
-  --mainBgColor:rgba(20,20,31,11);
-  --secondaryBgColor:rgba(27,27,39,1);
+  --mainBgColor:#242582;
+  --secondaryBgColor:#553D67;
   --borderColor1:rgba(40,41,57,1);
   --borderColor2:rgba(79,86,105,1);
   --textColorMain:#fff;
