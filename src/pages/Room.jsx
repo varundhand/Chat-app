@@ -8,8 +8,13 @@ const Room = () => {
   const [messages, setMessages] = useState([])
   const [messageBody, setMessageBody] = useState('')
 
-  useEffect(() => {
+  useEffect(() => { 
     getMessages();
+
+    client.subscribe(`collections.A.documents.A`, response => {
+      // Callback will be executed on changes for documents A and all files.
+      console.log(response);
+  });
   }, [])
 
   const getMessages = async () => {
