@@ -13,16 +13,23 @@ const Room = () => {
     // Appwrite provides Realtime functionality which saves us from integrating websockets(tcp-ip communication protocol)
     // it allows us to subscribe to a series 'Channels' and recieve callbacks of the events relating to that particular Channel
     // Hence we subscribe this channel when we first load the page; Thats why its in useEffect hook
-    client.subscribe(`databases.${DATABASE_ID}.collections.${COLLECTION_ID_MESSAGES}.documents`, response => {
+    const unsubscribe = client.subscribe(`databases.${DATABASE_ID}.collections.${COLLECTION_ID_MESSAGES}.documents`, response => {
       // Create Message
       if(response.events.includes("databases.*.collections.*.documents.*.create")){
         console.log('a new message was CREATED')
+        setMessages(prevState => [response.payload,...prevState])
       }
       // Delete Message
       if(response.events.includes("databases.*.collections.*.documents.*.delete")){
         console.log('a message was DELETED!')
+        setMessages(prevState => prevState.filter(message => message.$id !== response.payload.$id))
       }
   });
+  
+  return () => { // CleanUp function
+    unsubscribe();
+  }
+
   }, [])
 
   const getMessages = async () => {
@@ -41,7 +48,6 @@ const Room = () => {
   const deleteMessage = async (message_id) => { // we will pass in the message id for the message we wanna delete
     databases.deleteDocument(DATABASE_ID,COLLECTION_ID_MESSAGES,message_id)
     // setMessages([...messages].filter(message => message.$id !== message_id)) // Alter
-    setMessages(prevState => messages.filter(message => message.$id !== message_id))
   }
   // console.log(messages)
   const handleSubmit = async (e) => {
@@ -60,7 +66,7 @@ const Room = () => {
 
     console.log(response)
 
-    setMessages(prevState => [response,...messages])
+    // setMessages(prevState => [response,...messages])
 
     setMessageBody('')
   }
