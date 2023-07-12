@@ -1,19 +1,27 @@
 import React, { useEffect, useState } from 'react'
-import { COLLECTION_ID_MESSAGES, DATABASE_ID, databases } from '../appwriteConfig'
-import { ID,Query } from 'appwrite' // custom appwrite function which generates a unique id for us 
+import client, { COLLECTION_ID_MESSAGES, DATABASE_ID, databases } from '../appwriteConfig'
+import { ID,Query,Client } from 'appwrite' // custom appwrite function which generates a unique id for us 
 import { Trash2 } from 'react-feather'
 
 const Room = () => {
-
   const [messages, setMessages] = useState([])
   const [messageBody, setMessageBody] = useState('')
 
+  
   useEffect(() => { 
     getMessages();
-
-    client.subscribe(`collections.A.documents.A`, response => {
-      // Callback will be executed on changes for documents A and all files.
-      console.log(response);
+    // Appwrite provides Realtime functionality which saves us from integrating websockets(tcp-ip communication protocol)
+    // it allows us to subscribe to a series 'Channels' and recieve callbacks of the events relating to that particular Channel
+    // Hence we subscribe this channel when we first load the page; Thats why its in useEffect hook
+    client.subscribe(`databases.${DATABASE_ID}.collections.${COLLECTION_ID_MESSAGES}.documents`, response => {
+      // Create Message
+      if(response.events.includes("databases.*.collections.*.documents.*.create")){
+        console.log('a new message was CREATED')
+      }
+      // Delete Message
+      if(response.events.includes("databases.*.collections.*.documents.*.delete")){
+        console.log('a message was DELETED!')
+      }
   });
   }, [])
 
@@ -35,7 +43,7 @@ const Room = () => {
     // setMessages([...messages].filter(message => message.$id !== message_id)) // Alter
     setMessages(prevState => messages.filter(message => message.$id !== message_id))
   }
-  console.log(messages)
+  // console.log(messages)
   const handleSubmit = async (e) => {
     e.preventDefault()
 
