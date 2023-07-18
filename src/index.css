@@ -1,15 +1,16 @@
 /* Global settings */
 
-:root{
-  --mainBgColor:#242582;
-  --secondaryBgColor:#553D67;
-  --borderColor1:rgba(40,41,57,1);
-  --borderColor2:rgba(79,86,105,1);
-  --textColorMain:#fff;
-  --textColorSecondary:rgb(226, 227, 232);
-  --themeColorMain:rgba(219,26,90,1);
-  --themeColorSecondary:#386fd2;
+:root {
+  --mainBgColor: #222639;    /* Dark bluish background */
+  --secondaryBgColor: #313655; /* Slightly lighter bluish background */
+  --borderColor1: #434B6E;   /* Dark purple border */
+  --borderColor2: #50588C;   /* Slightly lighter purple border */
+  --textColorMain: #FFFFFF;  /* White text color */
+  --textColorSecondary: wheat; /* Light gray text color */
+  --themeColorMain: #F50057; /* Vibrant pink theme color */
+  --themeColorSecondary: #00B0FF; /* Bright cyan theme color */
 }
+
 
 * {
 margin: 0;

@@ -8,10 +8,9 @@ const Room = () => {
   const [messageBody, setMessageBody] = useState('')
 
   
-  useEffect(() => { 
+  useEffect(() => {  
     getMessages();
-    // Appwrite provides Realtime functionality which saves us from integrating websockets(tcp-ip communication protocol)
-    // it allows us to subscribe to a series 'Channels' and recieve callbacks of the events relating to that particular Channel
+     // it allows us to subscribe to a series of 'Channels' and recieve callbacks of the events relating to that particular Channel
     // Hence we subscribe this channel when we first load the page; Thats why its in useEffect hook
     const unsubscribe = client.subscribe(`databases.${DATABASE_ID}.collections.${COLLECTION_ID_MESSAGES}.documents`, response => {
       // Create Message
