@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../features/auth/authSlice'
 import { useNavigate } from 'react-router-dom'
+import { account } from '../appwriteConfig'
 
 const LoginPage = () => {
   const dispatch = useDispatch() 
@@ -14,18 +15,21 @@ const LoginPage = () => {
   })
 
   const handleLogin = async (e, credentials) => {
-    // e.preventDefault()
+    e.preventDefault()
 
     try {
-
+      const response = await account.createEmailSession(credentials.email, credentials.password);
+      console.log('Logged In:',response)
+      dispatch(login());
+      navigateTo('/')
     } catch(error){
       console.error(error)
     }
-    dispatch(login());
-    navigateTo('/')
+    
   }
 
   const handleInputChange = (e) => {
+    e.preventDefault()
     let name = e.target.name;
     let value = e.target.value
 
