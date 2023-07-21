@@ -5,14 +5,43 @@ import { useNavigate } from 'react-router-dom'
 import { account } from '../appwriteConfig'
 
 const LoginPage = () => {
+  const [user,setUser ] = useState(null)
+
   const dispatch = useDispatch() 
   const navigateTo = useNavigate()
 
-  //! new code
   const [credentials,setCredentials] = useState({
     email:'',
     password: ''
   })
+
+  useEffect(() => {
+    getUserOnLoad()
+
+    const checkSession = async () => { //TODO: Convert it to a hook 
+      try{
+        const accountDetails = await account.get();
+        if( accountDetails.$id){
+          navigateTo('/');
+        }
+      }catch(error){
+        console.error(error)
+      }
+    }
+
+    checkSession();
+    
+  }, [])
+
+  const getUserOnLoad =  async () => {
+    try{
+      const accountDetails = account.get();
+      console.log(accountDetails)
+      setUser(accountDetails)
+    }catch(error){
+      console.error(error)
+    }
+  }
 
   const handleLogin = async (e, credentials) => {
     e.preventDefault()
@@ -20,9 +49,14 @@ const LoginPage = () => {
     try {
       const response = await account.createEmailSession(credentials.email, credentials.password);
       console.log('Logged In:',response)
-      dispatch(login());
+      dispatch(login())
+      
+      const accountDetails = account.get();
+      setUser(accountDetails)
       navigateTo('/')
-    } catch(error){
+      console.log(user)
+
+    } catch(error){ 
       console.error(error)
     }
     
@@ -35,10 +69,6 @@ const LoginPage = () => {
 
     setCredentials({...credentials, [name]:value})
   }
-
-  // useEffect(() => {
-  //   console.log(credentials);
-  // }, [credentials])
 
   return (
     <div className='auth--container'>
