@@ -16,26 +16,29 @@ const LoginPage = () => {
   })
 
   useEffect(() => {
-    getUserOnLoad()
+    getUserOnLoad();
+    // getUserOnLoad()
 
-    const checkSession = async () => { //TODO: Convert it to a hook 
-      try{
-        const accountDetails = await account.get();
-        if( accountDetails.$id){
-          navigateTo('/');
-        }
-      }catch(error){
-        console.error(error)
-      }
-    }
-
-    checkSession();
+    // const checkSession = async () => {
+    //   try{
+    //     const accountDetails = await account.get();
+    //     if( accountDetails.$id){
+    //       setUser(accountDetails);
+    //       navigateTo('/');
+    //       console.log(accountDetails)
+    //       console.log('user logged in')
+    //     }
+    //   }catch(error){
+    //     console.error(error)
+    //   }
+    // }
+    // checkSession();
     
-  }, [])
+  },[])
 
   const getUserOnLoad =  async () => {
     try{
-      const accountDetails = account.get();
+      const accountDetails = await account.get();
       console.log(accountDetails)
       setUser(accountDetails)
     }catch(error){
@@ -48,18 +51,21 @@ const LoginPage = () => {
 
     try {
       const response = await account.createEmailSession(credentials.email, credentials.password);
-      console.log('Logged In:',response)
+      console.log('response',response)
+      console.log('id',response.$id)
+      
+      localStorage.setItem('authId', response.$id) // using local storage to persist the user
+      
       dispatch(login())
       
       const accountDetails = account.get();
       setUser(accountDetails)
       navigateTo('/')
-      console.log(user)
+      console.log('user',user)
 
     } catch(error){ 
       console.error(error)
-    }
-    
+    }  
   }
 
   const handleInputChange = (e) => {
