@@ -6,6 +6,8 @@ import { account } from '../appwriteConfig'
 
 const LoginPage = () => {
   const [user,setUser ] = useState(null)
+  // const userCheck = useSelector((state) => state.auth.accountDetails)
+  // console.log('here',userCheck)
 
   const dispatch = useDispatch() 
   const navigateTo = useNavigate()
@@ -39,7 +41,11 @@ const LoginPage = () => {
   const getUserOnLoad =  async () => {
     try{
       const accountDetails = await account.get();
-      console.log(accountDetails)
+      console.log('id',accountDetails.$id)
+      if (accountDetails.$id){
+        dispatch(login(accountDetails))
+        navigateTo('/');
+      }
       setUser(accountDetails)
     }catch(error){
       console.error(error)
@@ -56,9 +62,9 @@ const LoginPage = () => {
       
       localStorage.setItem('authId', response.$id) // using local storage to persist the user
       
-      dispatch(login())
+      dispatch(login(response)) // we pass the response to the login action in order to get the accountDetails
       
-      const accountDetails = account.get();
+      const accountDetails = await account.get();
       setUser(accountDetails)
       navigateTo('/')
       console.log('user',user)

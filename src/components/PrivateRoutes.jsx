@@ -7,20 +7,23 @@ import { login } from '../features/auth/authSlice'
 import { useNavigate } from 'react-router-dom'
 
 const PrivateRoutes = () => {
-  const dispatch = useDispatch()
-  const navigateTo = useNavigate()
-
-  useEffect(() => {
-    const authId = localStorage.getItem('authId')
-    console.log(authId)
-    if (authId) {
-      // console.log('in here ')
-      dispatch(login())
-      navigateTo('/')
-    }
-  },[dispatch])
+  // const dispatch = useDispatch()
+  // const navigateTo = useNavigate()
 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
+  const accountDetails = useSelector((state) => state.auth.accountDetails)
+  console.log('pvt routes:',accountDetails)
+  
+  // useEffect(() => {
+  //   const authId = localStorage.getItem('authId')
+  //   console.log(authId)
+  //   if (authId) {
+      // console.log('in here ')
+  //     dispatch(login())
+  //     navigateTo('/')
+  //   }
+  // },[dispatch])
+
   
   if (!isAuthenticated ){
     return <Navigate to='/login'/>
@@ -29,7 +32,7 @@ const PrivateRoutes = () => {
   // const user = false
   return (
     <div>
-      <Outlet />
+      <Outlet accountDetails={accountDetails}/>
     </div>
   )
 }

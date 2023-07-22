@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react'
 import client, { COLLECTION_ID_MESSAGES, DATABASE_ID, databases } from '../appwriteConfig'
 import { ID,Query,Client } from 'appwrite' // custom appwrite function which generates a unique id for us 
 import { Trash2 } from 'react-feather'
+import Header from '../components/Header'
+// import { useParams } from 'react-router-dom'
 
 const Room = () => {
   const [messages, setMessages] = useState([])
   const [messageBody, setMessageBody] = useState('')
 
-  
+  // const accountDetails = useParams();
+
+  // console.log(accountDetails,'yeet')
   useEffect(() => {  
     getMessages();
      // it allows us to subscribe to a series of 'Channels' and recieve callbacks of the events relating to that particular Channel
@@ -72,6 +76,7 @@ const Room = () => {
 
   return (
     <main className='container'>
+      <Header/>
        <div className="room--container">
 
       <form action="" id='message--form' onSubmit={handleSubmit}>
