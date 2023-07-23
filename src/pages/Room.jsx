@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import client, { COLLECTION_ID_MESSAGES, DATABASE_ID, databases } from '../appwriteConfig'
-import { ID,Query,Client } from 'appwrite' // custom appwrite function which generates a unique id for us 
+import { ID,Query,Client } from 'appwrite' // ID is custom appwrite function which generates a unique id for us 
 import { Trash2 } from 'react-feather'
 import Header from '../components/Header'
 // import { useParams } from 'react-router-dom'

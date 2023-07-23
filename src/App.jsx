@@ -8,6 +8,7 @@ import { store } from './app/store'
 
 import LoginPage from './pages/LoginPage'
 import Room from './pages/Room'
+import RegisterPage from './pages/RegisterPage'
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
       <Router>
         <Routes>       
           <Route path='/login' element={<LoginPage/>}/>
+          <Route path='/register' element={<RegisterPage/>}/>
 
           <Route element={<PrivateRoutes/>}>  {/* Protected pages will come under this */}
             <Route path='/' element={<Room/>}/>

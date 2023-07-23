@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../features/auth/authSlice'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { account } from '../appwriteConfig'
 
 const LoginPage = () => {
@@ -121,6 +121,8 @@ const LoginPage = () => {
           </div>
 
         </form>
+
+        <p>Dont have an account yet? Register <Link to='/register'>here</Link></p>
       </div>
     </div>
   )
