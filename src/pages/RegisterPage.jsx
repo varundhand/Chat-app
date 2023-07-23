@@ -1,8 +1,10 @@
 import React from 'react'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { account } from '../appwriteConfig'
 import { ID } from 'appwrite'
+import { useDispatch } from 'react-redux'
+import { login } from '../features/auth/authSlice'
 
 const RegisterPage = () => {
   const [credentials,setCredentials] = useState({
@@ -11,6 +13,8 @@ const RegisterPage = () => {
     password1: '',
     password2: ''
   })
+  const dispatch = useDispatch()
+  const navigateTo = useNavigate()
 
   const handleRegister = async (e,credentials) => {
     e.preventDefault()
@@ -20,15 +24,19 @@ const RegisterPage = () => {
     }
 
     try{
-      let resposne = await account.create(
+      let response = await account.create(
         ID.unique(),
         credentials.email,
         credentials.password1,
         credentials.name
       )
-      console.log('resgistered:',resposne)
+    await account.createEmailSession(credentials.email,credentials.password1)
+    const accountDetails = await account.get(); // we need to create email session after creating the account
+    dispatch(login(accountDetails))
+    navigateTo('/')
+      
     }catch(error){
-      console.error(error)
+      console.error(error) //TODO: handle 8 letter password error
     }
   }
 
