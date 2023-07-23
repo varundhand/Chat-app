@@ -40,7 +40,7 @@ const LoginPage = () => {
 
   const getUserOnLoad =  async () => {
     try{
-      const accountDetails = await account.get();
+      const accountDetails = await account.get(); // gives the correct logged in user details
       console.log('id',accountDetails.$id)
       if (accountDetails.$id){
         dispatch(login(accountDetails))
@@ -48,7 +48,9 @@ const LoginPage = () => {
       }
       setUser(accountDetails)
     }catch(error){
-      console.error(error)
+      if (error?.message === 'User (role: guests) missing scope (account)'){
+        console.log('User not logged in')
+      }
     }
   }
 
@@ -57,14 +59,15 @@ const LoginPage = () => {
 
     try {
       const response = await account.createEmailSession(credentials.email, credentials.password);
-      console.log('response',response)
-      console.log('id',response.$id)
+      console.log('handlelogin resp:',response)
+      // console.log('id',response.$id)
       
       localStorage.setItem('authId', response.$id) // using local storage to persist the user
       
-      dispatch(login(response)) // we pass the response to the login action in order to get the accountDetails
       
       const accountDetails = await account.get();
+
+      dispatch(login(accountDetails)) // we pass the response to the login action in order to get the accountDetails
       setUser(accountDetails)
       navigateTo('/')
       console.log('user',user)
