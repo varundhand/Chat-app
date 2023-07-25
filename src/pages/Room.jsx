@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import client, { COLLECTION_ID_MESSAGES, DATABASE_ID, databases } from '../appwriteConfig'
-import { ID,Query,Client } from 'appwrite' // ID is custom appwrite function which generates a unique id for us 
+import { ID,Query,Client, Role,Permission } from 'appwrite' // ID is custom appwrite function which generates a unique id for us 
 import { Trash2 } from 'react-feather'
 import Header from '../components/Header'
 // import { useParams } from 'react-router-dom'
@@ -61,20 +61,23 @@ const Room = () => {
 
     let payload ={
       user_id: user.$id,
-      username: user.name, //! username
+      username: user.name,
       body: messageBody
     }
+
+    let permissions = [
+      Permission.write(Role.user(user.$id)) // 'Permission.write' gives access to CRUD functionality, hence authenticated user has access to CRUD
+    ]
 
     let response = await databases.createDocument(
       DATABASE_ID,
       COLLECTION_ID_MESSAGES,
       ID.unique(),
       payload,
+      permissions
     )
 
     console.log(response)
-
-    // setMessages(prevState => [response,...messages])
 
     setMessageBody('')
   }
@@ -114,12 +117,15 @@ const Room = () => {
                   )}
                 <small className='message-timestamp'>{new Date(message.$createdAt).toLocaleString()}</small>
                 </p>
-                <div>
+                
+                {/* eslint-disable-next-line no-useless-escape */}
+                {message.$permissions.includes(`delete(\"user:${user.$id}\")`) && (
                   <Trash2 
                     className='delete--btn'
                     onClick={() => deleteMessage(message.$id)}
                   />
-                </div>
+                )}
+
               </div>
 
               <div className='message--body'>

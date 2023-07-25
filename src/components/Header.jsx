@@ -8,7 +8,7 @@ import { logout } from '../features/auth/authSlice'
 const Header = () => {
   const user = useSelector((state) => state.auth.accountDetails)
   const dispatch = useDispatch()
-  console.log('header user',user)
+  // console.log('header user',user)
 
   const handleLogout = async () => {
     await account.deleteSession('current')
