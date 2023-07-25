@@ -4,10 +4,13 @@ import { ID,Query,Client } from 'appwrite' // ID is custom appwrite function whi
 import { Trash2 } from 'react-feather'
 import Header from '../components/Header'
 // import { useParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const Room = () => {
   const [messages, setMessages] = useState([])
   const [messageBody, setMessageBody] = useState('')
+
+  const user = useSelector((state) => state.auth.accountDetails)
 
   // const accountDetails = useParams();
 
@@ -57,6 +60,8 @@ const Room = () => {
     e.preventDefault()
 
     let payload ={
+      user_id: user.$id,
+      username: user.name, //! username
       body: messageBody
     }
 
@@ -101,7 +106,14 @@ const Room = () => {
           {messages.map(message => (
             <div key={message.$id} className='message--wrapper' >
               <div className="message--header">
+                <p>
+                  {message?.username ? (
+                    <span>{message.username}</span>
+                  ): (
+                    <span>Anonymous User</span>
+                  )}
                 <small className='message-timestamp'>{new Date(message.$createdAt).toLocaleString()}</small>
+                </p>
                 <div>
                   <Trash2 
                     className='delete--btn'
