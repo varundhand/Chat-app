@@ -171,6 +171,7 @@ word-wrap: break-word; /* added */
 .message--body--owner{
 border: 1px solid rgba(219,26,90,1);
 background-color: var(--secondaryBgColor);
+align-self: flex-end;
 }
 
 .message-timestamp{

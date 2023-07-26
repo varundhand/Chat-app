@@ -82,6 +82,7 @@ const Room = () => {
     setMessageBody('')
   }
 
+  console.log(user)
   return (
     <main className='container'>
       <Header/>
@@ -107,13 +108,13 @@ const Room = () => {
      
         <div className="">
           {messages.map(message => (
-            <div key={message.$id} className='message--wrapper' >
+            <div key={message.$id} className={message?.username === user?.name ? 'message--body--owner' : '.message--body'} >
               <div className="message--header">
                 <p>
-                  {message?.username ? (
-                    <span>{message.username}</span>
+                  {message?.username === user?.name ? (
+                    <span>You</span>
                   ): (
-                    <span>Anonymous User</span>
+                    <span>{message?.username}</span>
                   )}
                 <small className='message-timestamp'>{new Date(message.$createdAt).toLocaleString()}</small>
                 </p>
