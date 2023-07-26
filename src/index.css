@@ -157,21 +157,46 @@ justify-content: space-between;
 align-items: center;
 }
 
-.message--body{
-padding: 0.5em 0;
-color: var(--textColorSecondary);
-background-color: var(--themeColorMain);
-padding: 1em;
-border-radius: 20px;
-width:fit-content;
-max-width: 100%;
-word-wrap: break-word; /* added */
+.message--body {
+  padding: 0.5em 0;
+  color: var(--textColorSecondary);
+  background-color: var(--themeColorMain);
+  padding: 1em;
+  border-radius: 20px;
+  width: fit-content;
+  max-width: 100%;
+  word-wrap: break-word;
+  /* Add box-shadow for a subtle 3D effect */
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease; /* Add transition for hover effect */
 }
 
-.message--body--owner{
-border: 1px solid rgba(219,26,90,1);
-background-color: var(--secondaryBgColor);
-align-self: flex-end;
+.message--body--owner {
+  padding: 0.5em 0;
+  color: var(--textColorSecondary);
+  background-color: rgb(35, 34, 34);
+  padding: 1em;
+  border-radius: 20px;
+  width: fit-content;
+  max-width: 100%;
+  word-wrap: break-word;
+  margin-left: auto;
+  /* Add box-shadow for a subtle 3D effect */
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease; /* Add transition for hover effect */
+}
+
+/* Add hover effect to both message--body and message--body--owner */
+.message--body--owner:hover{
+  box-shadow: 3px 3px 5px rgba(219, 26, 90, 1);
+}
+.message--body:hover {
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+.parent--message--delete {
+  display: flex;
+  align-items: center;
 }
 
 .message-timestamp{
@@ -183,12 +208,12 @@ color: rgb(164, 161, 161);
 color:#8db3dd;
 cursor: pointer;
 transition: 0.3s;
-width: 16px;
-margin-left: auto;
+width: 20px;
+margin-left: 5px;
 }
 
 .delete--btn:hover{
-color:red;
+color: rgba(219, 26, 90, 1);
 }
 
 

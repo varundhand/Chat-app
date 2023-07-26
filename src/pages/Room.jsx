@@ -108,7 +108,7 @@ const Room = () => {
      
         <div className="">
           {messages.map(message => (
-            <div key={message.$id} className={message?.username === user?.name ? 'message--body--owner' : '.message--body'} >
+            <div key={message.$id} className='message--wrapper' >
               <div className="message--header">
                 <p>
                   {message?.username === user?.name ? (
@@ -119,19 +119,23 @@ const Room = () => {
                 <small className='message-timestamp'>{new Date(message.$createdAt).toLocaleString()}</small>
                 </p>
                 
+                
+
+              </div>
+              
+              <div className="parent--message--delete">
+                <div className={message?.username === user?.name ? 'message--body--owner' : 'message--body'}>
+                  <span>{message.body}</span>
+                </div>
                 {/* eslint-disable-next-line no-useless-escape */}
                 {message.$permissions.includes(`delete(\"user:${user.$id}\")`) && (
-                  <Trash2 
-                    className='delete--btn'
-                    onClick={() => deleteMessage(message.$id)}
-                  />
-                )}
-
+                    <Trash2 
+                      className='delete--btn'
+                      onClick={() => deleteMessage(message.$id)}
+                    />
+                  )}
               </div>
-
-              <div className='message--body'>
-                <span>{message.body}</span>
-              </div>
+       
             </div>
           ))}
         </div>
