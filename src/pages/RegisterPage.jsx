@@ -36,7 +36,7 @@ const RegisterPage = () => {
     navigateTo('/')
       
     }catch(error){
-      console.error(error) //TODO: handle 8 letter password error
+      alert('Password must be at least 8 characters.')
     }
   }
 
@@ -100,7 +100,7 @@ const RegisterPage = () => {
           <input 
             className='btn btn--lg btn--main' 
             type="submit" 
-            value='Login' 
+            value='Register' 
           />
         </div>
 

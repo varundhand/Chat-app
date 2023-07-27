@@ -95,10 +95,22 @@ color: #fff;
 
 .btn--secondary{
 background-color: #8db3dd;
+transition: background-color 0.4s, color 0.4s;
+border-radius: 50px;
+border: none;
 }
 
 .btn:hover{
-opacity: 0.7;
+/* opacity: 0.7; */
+background-color: var(--themeColorMain); /* Change background color on click */
+color: var(--textColorSecondary);
+}
+
+.btn--secondary:focus{
+  outline: none;
+}
+.btn--secondary svg{
+  display: block;
 }
 
 /* Header Styling */
@@ -138,9 +150,15 @@ flex-direction: column;
 gap: 0.5em;
 }
 
+.parent--textarea--btn{
+  display: flex;
+}
+
 .send-btn--wrapper{
 display: flex;
 justify-content: flex-end;
+/* padding-left: 10px; */
+padding: 20px 0px 20px 15px;
 }
 
 .message--wrapper{
@@ -154,6 +172,12 @@ margin:1em;
 .message--header{
 display: flex;
 justify-content: space-between;
+align-items: center;
+}
+
+.message--header--owner{
+display: flex;
+justify-content: end;
 align-items: center;
 }
 

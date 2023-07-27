@@ -49,7 +49,7 @@ const LoginPage = () => {
       setUser(accountDetails)
     }catch(error){
       if (error?.message === 'User (role: guests) missing scope (account)'){
-        console.log('User not logged in')
+        console.log('User not logged in') //TODO: handle invalid credentials 
       }
     }
   }

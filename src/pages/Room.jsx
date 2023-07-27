@@ -5,6 +5,7 @@ import { Trash2 } from 'react-feather'
 import Header from '../components/Header'
 // import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { Send } from 'react-feather'
 
 const Room = () => {
   const [messages, setMessages] = useState([])
@@ -47,7 +48,7 @@ const Room = () => {
         Query.limit(5)
       ]
     )
-    console.log('REPSONSE:', response.documents)
+    // console.log('REPSONSE:', response.documents)
     setMessages(response?.documents)
   }
 
@@ -77,39 +78,23 @@ const Room = () => {
       permissions
     )
 
-    console.log(response)
+    // console.log(response)
 
     setMessageBody('')
   }
-
-  console.log(user)
+  
+  const reversedMessages = [...messages].reverse()
+  
   return (
     <main className='container'>
       <Header/>
        <div className="room--container">
-
-      <form action="" id='message--form' onSubmit={handleSubmit}>
-        <div>
-            <textarea 
-              required
-              placeholder='Type your message...'
-              maxLength='1000'
-              onChange={(e) => {setMessageBody(e.target.value)}}
-              value={messageBody}
-            >
-            </textarea>
-
-            <div className='send-btn--wrapper'>
-              <input className='btn btn--secondary' type="submit" value='Send'/>
-            </div>
-        </div>
-      </form>
-
-     
-        <div className="">
-          {messages.map(message => (
+   
+      {/* Messages */}
+      <div className=""> 
+          {reversedMessages.map(message => (
             <div key={message.$id} className='message--wrapper' >
-              <div className="message--header">
+              <div className= {message?.username === user?.name ? "message--header--owner" : "message--header"}>
                 <p>
                   {message?.username === user?.name ? (
                     <span>You</span>
@@ -139,6 +124,26 @@ const Room = () => {
             </div>
           ))}
         </div>
+
+      {/* Message Input Area */}
+      <form action="" id='message--form' onSubmit={handleSubmit}>
+        <div className='parent--textarea--btn'>
+            <textarea 
+              required
+              placeholder='Type your message...'
+              maxLength='1000'
+              onChange={(e) => {setMessageBody(e.target.value)}}
+              value={messageBody}
+            >
+            </textarea>
+
+            <div className='send-btn--wrapper'>
+              <button className='btn btn--secondary' type="submit" value='Send'>
+                <Send size={18}/>
+              </button>
+            </div>
+        </div>
+      </form>
 
       </div>
       

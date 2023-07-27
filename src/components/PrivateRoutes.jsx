@@ -12,7 +12,7 @@ const PrivateRoutes = () => {
 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated)
   const accountDetails = useSelector((state) => state.auth.accountDetails)
-  console.log('pvt routes:',accountDetails)
+  // console.log('pvt routes:',accountDetails)
   
   // useEffect(() => {
   //   const authId = localStorage.getItem('authId')
