@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import client, { COLLECTION_ID_MESSAGES, DATABASE_ID, databases } from '../appwriteConfig'
 import { ID,Query,Client, Role,Permission } from 'appwrite' // ID is custom appwrite function which generates a unique id for us 
 import { Trash2 } from 'react-feather'
@@ -15,7 +15,13 @@ const Room = () => {
 
   // const accountDetails = useParams();
 
-  // console.log(accountDetails,'yeet')
+  // to scroll the messages to bottom on page load
+  const roomContainerRef = useRef()
+  useEffect(() => {
+    roomContainerRef.current.scrollTop = roomContainerRef.current.scrollHeight
+    console.log(roomContainerRef)
+  }, [messages ])
+
   useEffect(() => {  
     getMessages();
      // it allows us to subscribe to a series of 'Channels' and recieve callbacks of the events relating to that particular Channel
@@ -88,7 +94,7 @@ const Room = () => {
   return (
     <main className='container'>
       <Header/>
-       <div className="room--container">
+       <div className="room--container" ref={roomContainerRef}>
    
       {/* Messages */}
       <div className=""> 
