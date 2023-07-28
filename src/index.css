@@ -45,7 +45,7 @@ justify-content: center;
 
 .form--wrapper{
 width: 600px;
-width: 600px;
+/* width: 600px; */
 padding: 2em;
 }
 
@@ -136,18 +136,25 @@ color: #8db3dd;
 }
 
 /* Room Styling */
-
 .room--container{
 padding: 2em;
 background-color: var(--secondaryBgColor);
-border-radius: 0 0 10px 10px;
+border-radius: 0 0 10px 0px;
 border:1px solid var(--borderColor1);
+max-width: 600px;
+max-height: 715px;
+overflow: auto;
 }
 
 #message--form{
+background-color: var(--mainBgColor);
+padding: .45em;
 display: flex;
 flex-direction: column;
 gap: 0.5em;
+border-radius: 0 0 10px 10px;
+border:1px solid var(--borderColor1);
+border-bottom: 3px var(--secondaryBgColor) solid;
 }
 
 .parent--textarea--btn{

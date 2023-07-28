@@ -45,7 +45,7 @@ const Room = () => {
       COLLECTION_ID_MESSAGES,
       [
         Query.orderDesc("$createdAt"),
-        Query.limit(5)
+        Query.limit(15)
       ]
     )
     // console.log('REPSONSE:', response.documents)
@@ -84,7 +84,7 @@ const Room = () => {
   }
   
   const reversedMessages = [...messages].reverse()
-  
+
   return (
     <main className='container'>
       <Header/>
@@ -125,6 +125,9 @@ const Room = () => {
           ))}
         </div>
 
+      
+
+      </div>
       {/* Message Input Area */}
       <form action="" id='message--form' onSubmit={handleSubmit}>
         <div className='parent--textarea--btn'>
@@ -144,8 +147,6 @@ const Room = () => {
             </div>
         </div>
       </form>
-
-      </div>
       
     </main>
   )
