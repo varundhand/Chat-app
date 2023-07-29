@@ -98,7 +98,7 @@ const RegisterPage = () => {
         </div>
         <div className="field--wrapper">
           <input 
-            className='btn btn--lg btn--main' 
+            className='btn--auth btn--lg btn--main' 
             type="submit" 
             value='Register' 
           />
