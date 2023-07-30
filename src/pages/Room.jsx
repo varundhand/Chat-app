@@ -14,12 +14,16 @@ const Room = () => {
   const user = useSelector((state) => state.auth.accountDetails)
 
   // const accountDetails = useParams();
+//! new code 
+  // const [reachedTop, setReachedTop] = useState(false)
+  // const [lastId, setLastId] = useState(null)
 
-  // to scroll the messages to bottom on page load
+  // const [loading, setLoading] = useState(false)
+  // const [hasMore, setHasMore] = useState(true)
+
   const roomContainerRef = useRef()
   useEffect(() => {
     roomContainerRef.current.scrollTop = roomContainerRef.current.scrollHeight
-    console.log(roomContainerRef)
   }, [messages ])
 
   useEffect(() => {  
@@ -42,8 +46,26 @@ const Room = () => {
   return () => { // CleanUp function
     unsubscribe();
   }
-
   }, [])
+
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     setReachedTop(roomContainerRef.current.scrollTop === 0);
+  //   }
+  //   roomContainerRef.current.addEventListener('scroll', handleScroll)
+
+  //   return () => {
+  //     roomContainerRef.current.removeEventListener('scroll', handleScroll)
+  //   }
+  // },[])
+
+  // useEffect(() => {
+  //   if (reachedTop) {
+  //     console.log('top');
+  //   }
+  // }, [reachedTop]);
+
+  // console.log('reached',reachedTop)
 
   const getMessages = async () => {
     const response = await databases.listDocuments(
@@ -51,12 +73,46 @@ const Room = () => {
       COLLECTION_ID_MESSAGES,
       [
         Query.orderDesc("$createdAt"),
-        Query.limit(15)
+        Query.limit(25)
       ]
     )
+    // const lastIdString = response.documents[response.documents.length - 1].$id
+    // handleLoadMoreMessages(lastIdString)
+    // console.log('in here',lastId)
     // console.log('REPSONSE:', response.documents)
     setMessages(response?.documents)
   }
+
+//TODO: INFINITE SCROLL
+  // const handleLoadMoreMessages = async (lastId) => {
+  //   console.log('yeeeet',lastId)
+  //   if (loading || hasMore) return ;
+
+  //   try {
+  //     setLoading(true);
+  //     const response = await databases.listDocuments(
+  //       DATABASE_ID,
+  //       COLLECTION_ID_MESSAGES,
+  //       [
+  //         Query.limit(25),
+  //         Query.cursorBefore(lastId),
+  //       ] 
+  //     );
+  //       console.log('aaaa', response)
+  //     if (response.documents.length === 0){
+  //       setHasMore(false)
+  //     }else {
+  //       setMessages(preMessages => [...preMessages, ...response.documents])
+  //       setLastId((response.documents[response.documents.length - 1].$id))
+  //     }
+  //   }catch (error){
+  //     console.error("Error fetching more messages:", error)
+  //   }finally{
+  //     setLoading(false)
+  //   }
+   
+  // }
+  // console.log('messages:',messages)
 
   const deleteMessage = async (message_id) => { // we will pass in the message id for the message we wanna delete
     databases.deleteDocument(DATABASE_ID,COLLECTION_ID_MESSAGES,message_id)

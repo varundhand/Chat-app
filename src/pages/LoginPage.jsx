@@ -3,12 +3,34 @@ import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../features/auth/authSlice'
 import { Link, useNavigate } from 'react-router-dom'
 import { account } from '../appwriteConfig'
+import toast, { Toaster } from 'react-hot-toast'; // Add this import
 
 const LoginPage = () => {
   const [user,setUser ] = useState(null)
+  const [showNotification, setShowNotification] = useState(false)
+
   // const userCheck = useSelector((state) => state.auth.accountDetails)
   // console.log('here',userCheck)
 
+  // toast notification 
+  const SuccessNotify = () =>{
+    toast.success('Clicked me!', {
+    duration: 2000,
+    position: 'top-center'
+  })
+  console.log('now here')
+}
+
+  useEffect(() => {
+    console.log('in here')
+    const timer = setTimeout(() => {
+      SuccessNotify()
+    }, 2000);
+
+    return () => clearTimeout(timer) // cleanup timer on unmount
+  },[showNotification])
+
+  // console.log(showNotification)
   const dispatch = useDispatch() 
   const navigateTo = useNavigate()
 
@@ -123,6 +145,8 @@ const LoginPage = () => {
         </form>
 
         <p>Dont have an account yet? Register <Link to='/register'>here</Link></p>
+        <button onClick={() => setShowNotification(true)}>click me</button>
+        {showNotification &&  <Toaster position="top-center"/>}
       </div>
     </div>
   )
