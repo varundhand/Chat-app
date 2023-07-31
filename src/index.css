@@ -37,7 +37,7 @@ margin:20px auto;
 /* Login & Register Pages */
 
 .auth--container{
-height: 100vh;
+height: calc(100vh - 49px);
 display: flex;
 align-items: center;
 justify-content: center;
@@ -324,4 +324,29 @@ color: rgba(219, 26, 90, 1);
     width: 600px; /* Set the width to 800px for larger screens */
     max-height: 66.25vh; /* Adjust the max-height as needed for larger screens */
   }
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #db1a5a;
+  padding: 15px;
+  font-size: 14px;
+  color: #333;
+}
+
+.footer a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+}
+
+.footer a i {
+  margin-right: 10px;
+}
+
+.footer a:hover {
+  color: white;
 }

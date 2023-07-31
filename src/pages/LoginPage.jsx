@@ -4,6 +4,7 @@ import { login } from '../features/auth/authSlice'
 import { Link, useNavigate } from 'react-router-dom'
 import { account } from '../appwriteConfig'
 import toast from 'react-hot-toast';
+import Footer from '../components/Footer'
 
 const LoginPage = () => {
   const [user,setUser ] = useState(null)
@@ -115,6 +116,7 @@ const LoginPage = () => {
   }
 
   return (
+    <>
     <div className='auth--container'>
       <div className="form--wrapper">
         <form action="" onSubmit={(e) => handleLogin(e,credentials)}>
@@ -155,6 +157,8 @@ const LoginPage = () => {
         {/* <button onClick={() => setShowNotification(true)}>click me</button> */}
       </div>
     </div>
+    <Footer/>
+    </>
   )
 }
 
