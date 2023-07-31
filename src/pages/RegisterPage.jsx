@@ -5,6 +5,7 @@ import { account } from '../appwriteConfig'
 import { ID } from 'appwrite'
 import { useDispatch } from 'react-redux'
 import { login } from '../features/auth/authSlice'
+import toast from 'react-hot-toast';
 
 const RegisterPage = () => {
   const [credentials,setCredentials] = useState({
@@ -15,11 +16,15 @@ const RegisterPage = () => {
   })
   const dispatch = useDispatch()
   const navigateTo = useNavigate()
+  const toastSettings = {
+    duration: 2000,
+    position: 'top-center'
+  }
 
   const handleRegister = async (e,credentials) => {
     e.preventDefault()
     if (credentials.password1 !== credentials.password2){
-      alert('The passwords doesnt match!')
+      toast.error('The passwords doesnt match!',toastSettings)
       return 
     }
 
@@ -34,9 +39,11 @@ const RegisterPage = () => {
     const accountDetails = await account.get(); // we need to create email session after creating the account
     dispatch(login(accountDetails))
     navigateTo('/')
+    // toast.
+    toast.success('Welcome aboard! Registration successful.',toastSettings)
       
     }catch(error){
-      alert('Password must be at least 8 characters.')
+      toast('Password must be at least 8 characters.',toastSettings)
     }
   }
 

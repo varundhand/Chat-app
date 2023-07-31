@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { account } from '../appwriteConfig'
 import { useDispatch } from 'react-redux'
 import { logout } from '../features/auth/authSlice'
+import { toast } from 'react-hot-toast'
 
 const Header = () => {
   const user = useSelector((state) => state.auth.accountDetails)
@@ -15,6 +16,7 @@ const Header = () => {
     dispatch(logout())
     localStorage.removeItem('isAuthenticated');
     localStorage.removeItem('accountDetails');
+    toast('You have successfully logged out! ')
   }
 
   return (

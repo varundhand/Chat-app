@@ -3,41 +3,40 @@ import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../features/auth/authSlice'
 import { Link, useNavigate } from 'react-router-dom'
 import { account } from '../appwriteConfig'
-import toast, { Toaster } from 'react-hot-toast'; // Add this import
+import toast from 'react-hot-toast';
 
 const LoginPage = () => {
   const [user,setUser ] = useState(null)
-  const [showNotification, setShowNotification] = useState(false)
+  // const [showNotification, setShowNotification] = useState(false)
+  const [credentials,setCredentials] = useState({
+    email:'',
+    password: ''
+  })
 
   // const userCheck = useSelector((state) => state.auth.accountDetails)
   // console.log('here',userCheck)
 
   // toast notification 
-  const SuccessNotify = () =>{
-    toast.success('Clicked me!', {
-    duration: 2000,
-    position: 'top-center'
-  })
-  console.log('now here')
-}
+//   const SuccessNotify = () =>{
+//     toast.success('Clicked me!', {
+//     duration: 2000,
+//     position: 'top-center'
+//   })
+//   console.log('now here')
+// }
 
-  useEffect(() => {
-    console.log('in here')
-    const timer = setTimeout(() => {
-      SuccessNotify()
-    }, 2000);
+  // useEffect(() => {
+  //   console.log('in here')
+  //   const timer = setTimeout(() => {
+  //     SuccessNotify()
+  //   }, 2000);
 
-    return () => clearTimeout(timer) // cleanup timer on unmount
-  },[showNotification])
+  //   return () => clearTimeout(timer) // cleanup timer on unmount
+  // },[showNotification])
 
   // console.log(showNotification)
   const dispatch = useDispatch() 
   const navigateTo = useNavigate()
-
-  const [credentials,setCredentials] = useState({
-    email:'',
-    password: ''
-  })
 
   useEffect(() => {
     getUserOnLoad();
@@ -92,10 +91,18 @@ const LoginPage = () => {
       dispatch(login(accountDetails)) // we pass the response to the login action in order to get the accountDetails
       setUser(accountDetails)
       navigateTo('/')
-      console.log('user',user)
+      // setShowNotification(true)
+      // console.log('user',user)
+      toast.success('You have successfully logged in!', {
+        duration: 2000,
+        position: 'top-center'
+      });
 
     } catch(error){ 
-      alert('Invalid Credentials :(')
+      toast.error('Invalid credentials. Please try again.',{
+        duration: 2000,
+        position: 'top-center'
+      })
     }  
   }
 
@@ -145,8 +152,7 @@ const LoginPage = () => {
         </form>
 
         <p>Dont have an account yet? Register <Link to='/register'>here</Link></p>
-        <button onClick={() => setShowNotification(true)}>click me</button>
-        {showNotification &&  <Toaster position="top-center"/>}
+        {/* <button onClick={() => setShowNotification(true)}>click me</button> */}
       </div>
     </div>
   )
