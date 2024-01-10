@@ -28,12 +28,12 @@ Check out the live demo of the portfolio website [here](https://chatroom-webapp.
 - User persistence: Users remain logged in even after closing the browser.
 - Modern UI: The application has a modern and user-friendly interface for an enhanced user experience.
 
-  ## Future Features
+## Future Features
 
 - Infinite scrolling: Implement infinite scrolling to load older messages as the user scrolls up in the chat.
 - Multiple chat rooms: Allow users to create and join multiple chat rooms for different topics or conversations.
 
-  ## Technologies Used
+## Technologies Used
 
 - Vite: A fast and lightweight build tool for modern web applications.
 - React: A popular JavaScript library for building user interfaces.
